@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Web3-Aggregator</title>
+    <title>{% block title %}
+    	Base title
+    {% endblock %}</title>
 </head>
 <body>
 
+{% include "components/navbar.html" %}
+
+{% block body %}
+	Base Body!
+{% endblock %}
+
+<footer>
+    &copy; Web3-Aggregator
+</footer>
 </body>
 </html>
