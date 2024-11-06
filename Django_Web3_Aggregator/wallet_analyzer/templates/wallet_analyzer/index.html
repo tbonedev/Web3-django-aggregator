@@ -1,0 +1,15 @@
+{% extends 'wallet_analyzer/base.html' %}
+
+{% block title %}
+	Web3-Aggregator-Wallets
+{% endblock %}
+	
+{% block body %}
+	<h1>All wallets</h1>
+        <ul>
+        {% for wallet in wallets %}
+            <li> {{ wallet }}</li>
+        {% endfor %}
+    
+        </ul>
+{% endblock %}
