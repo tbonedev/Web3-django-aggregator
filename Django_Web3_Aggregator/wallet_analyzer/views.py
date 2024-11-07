@@ -1,9 +1,12 @@
-from lib2to3.fixes.fix_input import context
+
+from django.http import JsonResponse
+from django.urls import reverse_lazy
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 
+from .forms import WalletForm
 from .models import Wallet
 
 # Create your views here.
@@ -22,3 +25,12 @@ class WalletAnalyzerListView(ListView):
     template_name = "wallet_analyzer/index.html"
     model = Wallet
     context_object_name = "wallets"
+
+
+class WalletAnalyzerConnectionView(TemplateView):
+    template_name = "wallet_analyzer/base.html"
+
+
+class WalletAnalyzerCreateView(CreateView):
+    model = Wallet
+    form_class = WalletForm
