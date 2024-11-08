@@ -1,0 +1,37 @@
+{% block body %}
+    <h2>Connect Your Wallet</h2>
+    <form id="walletForm" method="post" action="{% url 'wallet_analyzer:wallet_connect' %}">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Рендерим форму, включая поле address -->
+        
+        <!-- Скрытое поле для адреса кошелька -->
+        <input type="hidden" name="address" id="id_address"> 
+
+        <button type="button" id="connectWalletButton">Connect Wallet</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script>
+        document.getElementById("connectWalletButton").addEventListener("click", async function () {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    // Подключаемся к Metamask и получаем адрес
+                    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                    const walletAddress = accounts[0];
+                    console.log("Connected wallet address:", walletAddress);
+
+                    // Записываем адрес в скрытое поле формы
+                    document.getElementById("id_address").value = walletAddress;
+
+                    // Отправляем форму
+                    document.getElementById("walletForm").submit();
+                } catch (error) {
+                    console.error("Error connecting to Metamask:", error);
+                    alert("Failed to connect to Metamask. " + error.message);
+                }
+            } else {
+                alert("Metamask is not installed. Please install Metamask to use this feature.");
+            }
+        });
+    </script>
+{% endblock %}
