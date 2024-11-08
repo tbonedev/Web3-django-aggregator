@@ -1,16 +1,24 @@
 
-from django.http import JsonResponse
-from django.urls import reverse_lazy
 
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, CreateView
 
 from .forms import WalletForm
 from .models import Wallet
 
 # Create your views here.
+def main_view(request):
+    if request.method == "POST":
+        form = WalletForm(request.POST)
+        if form.is_valid():
+            # Сохраняем адрес кошелька, если форма валидна
+            form.save()
+            return HttpResponse("Wallet address saved successfully.")
+    else:
+        form = WalletForm()
 
+    return render(request, 'wallet_analyzer/base.html', {'form': form})
 
 class WalletAnalyzerView(TemplateView):
     template_name = "wallet_analyzer/index.html"

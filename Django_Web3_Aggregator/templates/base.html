@@ -11,13 +11,15 @@
 {% include "components/navbar.html" %}
 
 {% block body %}
-	Base Body!
+    {% include 'components/wallet_connection.html' %}
 {% endblock %}
+
+
 
 <footer>
     &copy; Web3-Aggregator
     {% block footer %}
-    	
+
     {% endblock %}
 </footer>
 </body>
