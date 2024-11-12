@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+    <h1>Ваш кошелек</h1>
+    {% if address and balance is not None %}
+        <p>Адрес: {{ address }}</p>
+        <p>Баланс: {{ balance }} ETH</p>
+    {% else %}
+        <p>Кошелек не найден или отсутствует баланс</p>
+    {% endif %}
+{% endblock %}
