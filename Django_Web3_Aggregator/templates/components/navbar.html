@@ -1,7 +1,6 @@
 <nav>
     <ul>
         <li><a href="{% url 'index' %}">Home</a></li>
-        <li><a href="{% url 'wallet_analyzer:index' %}">All Wallets</a></li>
         <li><a href="{% url 'wallet_analyzer:wallet_connection' %}">Connect Wallet</a></li>
          {% if request.session.wallet_address %}
             <li><a href="{% url 'wallet_analyzer:wallet_balance' %}">Wallet Balance</a></li>

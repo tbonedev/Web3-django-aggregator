@@ -1,7 +1,6 @@
 
 
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, FormView
 
@@ -58,17 +57,6 @@ class WalletBalanceView(TemplateView):
 
         return context
 
-
-class WalletAnalyzerView(TemplateView):
-    template_name = "wallet_analyzer/base_wallets.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['wallets'] = Wallet.objects.all()
-        return context
-
-
-
 class WalletDisconnectView(View):
     def get(self, request):
         # Очистка сессии для удаления данных о кошельке
@@ -79,11 +67,9 @@ class WalletDisconnectView(View):
         return redirect('index')  # или укажите другую нужную страницу
 
 
-class WalletAnalyzerListView(ListView):
-    template_name = "wallet_analyzer/base_wallets.html"
-    model = Wallet
-    context_object_name = "wallets"
 
+class WalletAnalyzerView(TemplateView):
+    template_name = "wallet_analyzer/index.html"
 
 class WalletAnalyzerConnectionView(TemplateView):
     template_name = "wallet_analyzer/base.html"
