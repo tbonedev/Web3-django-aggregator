@@ -11,4 +11,6 @@ urlpatterns = [
     path('disconnect/', views.WalletDisconnectView.as_view(), name='wallet_disconnect'),
     path('balance/', views.WalletBalanceView.as_view(), name='wallet_balance'),
     path("wallet/", views.WalletAnalyzerConnectionView.as_view(), name="wallet_connection"),
+    path('network_info/', views.NetworkInfoView.as_view(), name='network_info'),
+
 ]

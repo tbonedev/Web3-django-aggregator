@@ -1,5 +1,5 @@
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, CreateView, FormView
 from django.views import View
@@ -58,6 +58,20 @@ class WalletDisconnectView(View):
         return HttpResponseRedirect(reverse('index'))
 
 
+class NetworkInfoView(TemplateView):
+    template_name = "wallet_analyzer/components/network_info.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Создаем экземпляр EVMTools для сети Ethereum mainnet
+        evm_tools = EVMTools("ethereum_mainnet")
+
+        # Получаем цену газа и последний блок
+        context['gas_price'] = evm_tools.get_gas_price()
+        context['latest_block'] = evm_tools.get_latest_block()
+
+        return context
 class WalletAnalyzerView(TemplateView):
     template_name = "wallet_analyzer/index.html"
 

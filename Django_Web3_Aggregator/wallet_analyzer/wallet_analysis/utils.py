@@ -16,3 +16,15 @@ class EVMTools:
         balance_wei = web3.eth.get_balance(checksum_address)
         return from_wei(balance_wei, 'ether')
 
+
+    def get_gas_price(self):
+        web3 = self.connection.get_web3_instance()
+        gas_price_wei = web3.eth.gas_price
+        return from_wei(gas_price_wei, 'gwei')
+
+    def get_latest_block(self):
+        web3 = self.connection.get_web3_instance()
+        latest_block = web3.eth.get_block('latest')
+        return latest_block
+
+

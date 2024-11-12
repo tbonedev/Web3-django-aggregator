@@ -64,6 +64,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "wallet_analyzer.context_processors.network_info",  # Добавьте эту строку
+
             ],
         },
     },

@@ -28,6 +28,7 @@
 <footer class="container">
     <p>&copy; Web3-Aggregator</p>
     {% block footer %}
+        {% include 'wallet_analyzer/components/network_info.html' %}
     {% endblock %}
 </footer>
 {% include 'wallet_analyzer/components/f5_connection_check.html' %}
