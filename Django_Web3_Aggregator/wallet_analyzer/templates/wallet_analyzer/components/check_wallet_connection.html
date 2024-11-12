@@ -1,0 +1,36 @@
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<script>
+    // Функция для проверки и открытия MetaMask, если он заблокирован
+    async function ensureMetaMaskConnected() {
+        if (typeof window.ethereum === 'undefined') {
+            alert("MetaMask не установлен. Пожалуйста, установите MetaMask для доступа.");
+            return false;
+        }
+        
+        try {
+            // Запрашиваем доступ к аккаунтам, что откроет MetaMask, если он заблокирован
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            return accounts.length > 0;
+        } catch (error) {
+            console.error("MetaMask connection error:", error);
+            return false;
+        }
+    }
+
+    // Обработчик нажатия на "Wallet Balance"
+    async function handleWalletBalanceClick(event) {
+        const isConnected = await ensureMetaMaskConnected();
+        if (!isConnected) {
+            event.preventDefault();  // Отменяем переход, если MetaMask не подключен
+            window.location.href = '/';  // Перенаправляем на главную страницу
+        }
+    }
+
+    // Привязываем проверку к ссылке "Wallet Balance"
+    document.addEventListener("DOMContentLoaded", function() {
+        const balanceLink = document.getElementById('walletBalanceLink');
+        if (balanceLink) {
+            balanceLink.addEventListener('click', handleWalletBalanceClick);
+        }
+    });
+</script>

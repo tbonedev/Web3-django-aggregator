@@ -117,8 +117,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'Django_Web3_Aggregator/static')]  # или папка для статических файлов в приложении
+
+# Путь к общей папке для статических файлов (в корне проекта)
+STATICFILES_DIRS = [BASE_DIR / 'Django_Web3_Aggregator' / 'static']
+
+# Где Django будет собирать все статические файлы при использовании collectstatic
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

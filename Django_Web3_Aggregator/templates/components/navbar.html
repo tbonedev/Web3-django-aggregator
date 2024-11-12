@@ -1,14 +1,20 @@
+<!-- navbar.html -->
 <nav>
     <ul>
         <li><a href="{% url 'index' %}">Home</a></li>
-        <li><a href="{% url 'wallet_analyzer:wallet_connection' %}">Connect Wallet</a></li>
-         {% if request.session.wallet_address %}
-            <li><a href="{% url 'wallet_analyzer:wallet_balance' %}">Wallet Balance</a></li>
-            <li><a href="{% url 'wallet_analyzer:wallet_disconnect' %}">Disconnect Wallet</a></li>
+        
+        {% if request.session.wallet_connected %}
+            <!-- Кнопка для просмотра баланса и отключения кошелька, если кошелек подключен -->
+            <li><a href="{% url 'wallet_analyzer:wallet_balance' %}" id="walletBalanceLink">Wallet Balance</a></li>
+            <form action="{% url 'wallet_analyzer:wallet_disconnect' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Disconnect Wallet</button>
+            </form>
         {% else %}
-            <li><span>Wallet Balance (not available)</span></li>
+            <!-- Кнопка для подключения кошелька, если он еще не подключен -->
+            <li><a href="{% url 'wallet_analyzer:wallet_connection' %}">Connect Wallet</a></li>
         {% endif %}
-
+        
         <li><a href="#">About</a></li>
     </ul>
 </nav>
