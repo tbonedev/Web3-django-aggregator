@@ -21,5 +21,5 @@ class EVMConnection:
         return self.web3
 
 # Автоматическое создание экземпляра при импорте файла
-eth_connection = EVMConnection
+eth_connection = EVMConnection("ethereum_mainnet")
 
