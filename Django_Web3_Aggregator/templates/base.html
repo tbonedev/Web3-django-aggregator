@@ -2,25 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}
-    	Base title
-    {% endblock %}</title>
+    <title>{% block title %} Base title {% endblock %}</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
 </head>
 <body>
 
-{% include "components/navbar.html" %}
+<!-- Основной контейнер для всех элементов страницы -->
+<main class="container">
+    
+    <!-- Навигационная панель -->
+    <nav>
+        {% include "components/navbar.html" %}
+    </nav>
+    
+    <!-- Основное содержимое -->
+    <section>
+        {% block body %}
+            {% include 'wallet_analyzer/components/wallet_connection.html' %}
+        {% endblock %}
+    </section>
+    
+</main>
 
-{% block body %}
-    {% include 'components/wallet_connection.html' %}
-{% endblock %}
-
-
-
-<footer>
-    &copy; Web3-Aggregator
+<!-- Подвал -->
+<footer class="container">
+    <p>&copy; Web3-Aggregator</p>
     {% block footer %}
-
     {% endblock %}
 </footer>
+
 </body>
 </html>
