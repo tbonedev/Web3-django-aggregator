@@ -58,6 +58,26 @@ class WalletDisconnectView(View):
         return HttpResponseRedirect(reverse('index'))
 
 
+class WalletMoreInfoView(TemplateView):
+    template_name = "wallet_analyzer/components/wallet_more_info.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        # Проверяем, есть ли кошелек в сессии; если нет — перенаправляем на подключение
+        if 'wallet_address' not in request.session:
+            return redirect('wallet_analyzer:wallet_connection')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        wallet_address = self.request.session.get('wallet_address')
+
+        # Здесь добавьте логику получения дополнительной информации
+        # Например:
+        context['address'] = wallet_address
+        context['more_info'] = "Здесь может быть дополнительная информация о кошельке"
+        return context
+
+
 class NetworkInfoView(TemplateView):
     template_name = "wallet_analyzer/components/network_info.html"
 

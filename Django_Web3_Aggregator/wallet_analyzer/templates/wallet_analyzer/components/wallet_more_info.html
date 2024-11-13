@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block body %}
+    <h2>More Information About Wallet</h2>
+    {% if address %}
+        <p>Address: {{ address }}</p>
+        <p>Additional Information: {{ more_info }}</p>
+    {% else %}
+        <p>No wallet information available. Please connect your wallet.</p>
+    {% endif %}
+{% endblock %}
