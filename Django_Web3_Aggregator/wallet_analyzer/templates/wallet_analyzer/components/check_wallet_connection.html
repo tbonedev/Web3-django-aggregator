@@ -1,36 +1,34 @@
+<!-- components/check_wallet_connection.html -->
 <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 <script>
-    // Функция для проверки и открытия MetaMask, если он заблокирован
-    async function ensureMetaMaskConnected() {
-        if (typeof window.ethereum === 'undefined') {
-            alert("MetaMask не установлен. Пожалуйста, установите MetaMask для доступа.");
-            return false;
-        }
-        
-        try {
-            // Запрашиваем доступ к аккаунтам, что откроет MetaMask, если он заблокирован
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    // Функция для проверки, подключен ли MetaMask
+    async function checkMetaMaskConnected() {
+        if (typeof window.ethereum !== 'undefined') {
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
             return accounts.length > 0;
-        } catch (error) {
-            console.error("MetaMask connection error:", error);
-            return false;
         }
+        return false;
     }
 
-    // Обработчик нажатия на "Wallet Balance"
-    async function handleWalletBalanceClick(event) {
-        const isConnected = await ensureMetaMaskConnected();
-        if (!isConnected) {
-            event.preventDefault();  // Отменяем переход, если MetaMask не подключен
-            window.location.href = '/';  // Перенаправляем на главную страницу
-        }
-    }
+    // Выполняем проверку при загрузке страницы
+    document.addEventListener("DOMContentLoaded", async function() {
+        const isConnected = await checkMetaMaskConnected();
+        const currentPath = window.location.pathname;
 
-    // Привязываем проверку к ссылке "Wallet Balance"
-    document.addEventListener("DOMContentLoaded", function() {
-        const balanceLink = document.getElementById('walletBalanceLink');
-        if (balanceLink) {
-            balanceLink.addEventListener('click', handleWalletBalanceClick);
+        // Добавляем нужные пути, где требуется проверка MetaMask
+        const restrictedPaths = ['/wallets/balance/', '/wallets/more_info/'];
+
+        if (!isConnected && restrictedPaths.includes(currentPath)) {
+            alert("MetaMask не подключен. Пожалуйста, подключите MetaMask для доступа к функционалу сайта.");
+
+            // Отправляем запрос на сервер для очистки сессии
+            await fetch('/wallets/disconnect/', {
+                method: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+            });
+
+            // Перенаправляем на главную страницу после очистки сессии
+            window.location.href = '/';
         }
     });
 </script>
