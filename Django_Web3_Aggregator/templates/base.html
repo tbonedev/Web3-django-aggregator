@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title>{% block title %} Base title {% endblock %}</title>
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    <style>
+        /* Устанавливаем Flexbox для всей страницы */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        main {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,6 +31,7 @@
     <!-- Основное содержимое -->
     <section>
         {% block body %}
+            
             {% include 'wallet_analyzer/components/wallet_connection.html' %}
         {% endblock %}
     </section>
@@ -25,12 +39,8 @@
 </main>
 
 <!-- Подвал -->
-<footer class="container">
-    <p>&copy; Web3-Aggregator</p>
-    {% block footer %}
-        {% include 'wallet_analyzer/components/network_info.html' %}
-    {% endblock %}
-</footer>
+{% include 'components/footer.html' %}
+
 {% include 'wallet_analyzer/components/f5_connection_check.html' %}
 
 {% include "wallet_analyzer/components/check_wallet_connection.html" %}
