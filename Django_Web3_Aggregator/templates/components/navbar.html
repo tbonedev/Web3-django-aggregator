@@ -6,6 +6,7 @@
         {% if request.session.wallet_connected %}
             <!-- Кнопка для просмотра баланса и отключения кошелька, если кошелек подключен -->
             <li><a href="{% url 'wallet_analyzer:wallet_balance' %}" id="walletBalanceLink">Wallet Balance</a></li>
+            <li><a href="{% url 'wallet_analyzer:wallet_more_info' %}" id="walletMoreInfoLink">More Information About Wallet</a></li>
             <form action="{% url 'wallet_analyzer:wallet_disconnect' %}" method="post" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit">Disconnect Wallet</button>
