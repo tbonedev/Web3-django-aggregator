@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.urls import path
 
-from . import views
+from wallet_analyzer import views
 
 app_name = "wallet_analyzer"
 

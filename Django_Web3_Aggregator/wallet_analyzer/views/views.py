@@ -3,9 +3,9 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, CreateView, FormView
 from django.views import View
-from .forms import WalletForm
-from .models import Wallet
-from .wallet_analysis.utils import EVMTools
+from wallet_analyzer.forms import WalletForm
+from wallet_analyzer.models import Wallet
+from wallet_analyzer.wallet_analysis.utils import EVMTools
 
 
 class WalletConnectView(FormView):
