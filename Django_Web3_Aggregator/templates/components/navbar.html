@@ -1,21 +1,36 @@
-<!-- navbar.html -->
-<nav>
-    <ul>
-        <li><a href="{% url 'index' %}">Home</a></li>
-        
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/navbar_connect_wallet.css' %}">
+</head>
+<header style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; position: relative;">
+    <!-- Левая часть: Home и About -->
+    <div style="display: flex; gap: 1rem;">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="#">About</a>
+    </div>
+
+    <!-- Правая часть: элементы, связанные с кошельком -->
+    <div style="display: flex; gap: 1rem; align-items: center; position: relative;">
         {% if request.session.wallet_connected %}
-            <!-- Кнопка для просмотра баланса и отключения кошелька, если кошелек подключен -->
-            <li><a href="{% url 'wallet_analyzer:wallet_balance' %}" id="walletBalanceLink">Wallet Balance</a></li>
-            <li><a href="{% url 'wallet_analyzer:wallet_more_info' %}" id="walletMoreInfoLink">More Information About Wallet</a></li>
+            <a href="{% url 'wallet_analyzer:wallet_balance' %}" id="walletBalanceLink">Wallet Balance</a>
+            <a href="{% url 'wallet_analyzer:wallet_more_info' %}" id="walletMoreInfoLink">More Information About Wallet</a>
             <form action="{% url 'wallet_analyzer:wallet_disconnect' %}" method="post" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit">Disconnect Wallet</button>
             </form>
         {% else %}
-            <!-- Кнопка для подключения кошелька, если он еще не подключен -->
-            <li><a href="{% url 'wallet_analyzer:wallet_connection' %}">Connect Wallet</a></li>
+            <!-- Кнопка для открытия формы подключения -->
+            <button id="connectWalletBtn">Connect Wallet</button>
+
+            <!-- Выпадающая форма для подключения -->
+            <div id="walletDropdown" class="dropdown">
+                {% include 'wallet_analyzer/components/wallet_connection.html' %}
+            </div>
         {% endif %}
-        
-        <li><a href="#">About</a></li>
-    </ul>
-</nav>
+    </div>
+</header>
+
+<script src="{% static 'js/toggle_wallet_form.js' %}"></script>
+
+
+                

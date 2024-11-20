@@ -1,16 +1,54 @@
-
 {% extends "base.html" %}
-
+{% load static %}
 
 {% block body %}
-    {% if address %}
-        <h2>Ваш баланс</h2>
-        <p>Адрес кошелька: {{ address }}</p>
-        <p>Баланс: {{ balance }} ETH</p>
-    {% else %}
-        <script>
-    // Если адрес кошелька не найден, перенаправляем на главную страницу
-            window.location.href = '/';
-        </script>
-    {% endif %}
+    <div style="display: flex; justify-content: space-between; padding: 1rem;">
+        <!-- Правая часть: Баланс -->
+        <div style="text-align: right; width: 30%;">
+            <h2>Wallet Balance</h2>
+            {% if balances %}
+                <ul>
+                    {% for network, balance in balances.items %}
+                        <li><strong>{{ network }}:</strong> {{ balance }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No balances available for this wallet.</p>
+            {% endif %}
+        </div>
+
+        <div style="text-align: left; width: 65%; overflow-y: auto; max-height: 600px;">
+            <h3>NFT Collection</h3>
+            {% if nfts_by_network %}
+                {% for network, nfts in nfts_by_network.items %}
+                    {% if nfts|length > 0 %}
+                        <h4>{{ network }} Network</h4>
+                        <div class="nft-grid" id="nft-grid-{{ network }}">
+                            {% for nft in nfts %}
+                                <div class="nft-card">
+                                    <img src="{{ nft.image_url }}" alt="NFT Image" class="nft-image">
+                                    <h4 class="nft-name" title="{{ nft.name }}">{{ nft.name }}</h4>
+                                    <a href="{{ nft.permalink }}" target="_blank" class="nft-link">View on OpenSea</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if nfts|length >= 5 %}
+                        <button 
+                            class="load-more-btn" 
+                            data-network="{{ network }}" 
+                            data-page="2"
+                            onclick="loadMoreNFTs('{{ network }}')">
+                            Load More
+                        </button>
+                        {% endif %}                             
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>No NFTs found for this wallet.</p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
+
+<script src="{% static 'wallet_analyzer/js/nft_pagination.js' %}"></script>
+

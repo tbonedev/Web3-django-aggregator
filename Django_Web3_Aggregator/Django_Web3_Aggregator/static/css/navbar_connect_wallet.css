@@ -1,0 +1,28 @@
+    /* Общий сброс стилей */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Стили кнопки "Connect Wallet" и выпадающего меню */
+    button, .dropdown {
+        all: unset; /* Удаляет все встроенные стили */
+        font-size: 1rem; /* Единый размер текста */
+        font-family: inherit; /* Наследует шрифт от родителя */
+        text-decoration: none; /* Убирает подчеркивание текста */
+        color: inherit; /* Наследует цвет текста от родителя */
+        cursor: pointer; /* Делает элемент кликабельным */
+    }
+
+    /* Выпадающее меню */
+    .dropdown {
+        display: none; /* По умолчанию скрыто */
+        position: absolute; /* Для правильного расположения */
+        top: 100%; /* Под кнопкой */
+        right: 0; /* Привязка к правому краю */
+    }
+
+    .dropdown.show {
+        display: block; /* Показывает меню */
+    }

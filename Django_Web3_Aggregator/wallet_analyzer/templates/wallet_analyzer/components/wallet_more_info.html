@@ -1,11 +1,14 @@
 {% extends "index.html" %}
 
 {% block body %}
-    <h2>More Information About Wallet</h2>
-    {% if address %}
-        <p>Address: {{ address }}</p>
-        <p>Additional Information: {{ more_info }}</p>
-    {% else %}
-        <p>No wallet information available. Please connect your wallet.</p>
-    {% endif %}
+    <div style="display: flex; justify-content: flex-end; padding: 1rem;">
+        {% if address %}
+            <div style="text-align: right;">
+                <p>{{ address }}</p>
+                <p>Total count of transactions: {{ tx_count }}</p>
+            </div>
+        {% else %}
+            <p>No wallet information available. Please connect your wallet.</p>
+        {% endif %}
+    </div>
 {% endblock %}

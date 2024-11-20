@@ -1,7 +1,7 @@
 <!-- Подвал -->
-<footer class="container" style="width: 100%; display: flex; justify-content: space-between; align-items: normal;">
+<footer class="container-fluid footer" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem;">
     <p>&copy; Web3-Aggregator</p>
-    <div style="text-align: center;">
+    <div>
         {% block footer %}
             {% include 'wallet_analyzer/components/network_info.html' %}
         {% endblock %}

@@ -1,0 +1,56 @@
+   .nft-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1rem;
+    }
+
+    .nft-card {
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 0.5rem;
+        background-color: #222;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .nft-card:hover {
+        transform: scale(1.05); /* Увеличение карточки при наведении */
+    }
+
+    .nft-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-bottom: 0.5rem;
+        transition: transform 0.3s ease-in-out; /* Анимация увеличения изображения */
+    }
+
+    .nft-card:hover .nft-image {
+        transform: scale(1.1); /* Увеличение изображения при наведении */
+    }
+
+    /* Название NFT */
+    .nft-name {
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2; /* Ограничение текста до двух строк */
+        overflow: hidden;
+        max-width: 160px;
+    }
+
+
+    .nft-link {
+        text-decoration: none;
+        color: #1e90ff;
+        font-size: 0.8rem;
+    }
+
+    .nft-link:hover {
+        text-decoration: underline;
+    }

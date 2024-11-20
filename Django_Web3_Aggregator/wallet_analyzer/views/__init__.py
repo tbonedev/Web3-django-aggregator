@@ -1,1 +1,1 @@
-from .views import *
+from .wallet_views import *

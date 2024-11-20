@@ -1,48 +1,40 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} Base title {% endblock %}</title>
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
-    <style>
-        /* Устанавливаем Flexbox для всей страницы */
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-        }
-        
-        main {
-            flex: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'wallet_analyzer/css/nft_display.css' %}">
+
+    <script>
+        window.csrfToken = '{{ csrf_token }}'; // Глобальная переменная для CSRF токена
+    </script>
 </head>
 <body>
 
-<!-- Основной контейнер для всех элементов страницы -->
-<main class="container">
-    
     <!-- Навигационная панель -->
-    <nav>
-        {% include "components/navbar.html" %}
-    </nav>
-    
-    <!-- Основное содержимое -->
-    <section>
-        {% block body %}
-            
-            {% include 'wallet_analyzer/components/wallet_connection.html' %}
-        {% endblock %}
-    </section>
-    
-</main>
+    {% include "components/navbar.html" %}
 
-<!-- Подвал -->
-{% include 'components/footer.html' %}
+    <!-- Основной контейнер для всех элементов страницы -->
+    <main class="container">
+        <!-- Основное содержимое -->
+        <section>
+            {% block body %}
+                {% include 'wallet_analyzer/components/wallet_connection.html' %}
+            {% endblock %}
+        </section>
+    </main>
 
-{% include 'wallet_analyzer/components/f5_connection_check.html' %}
+    <!-- Подвал -->
+    {% include 'components/footer.html' %}
+    <script src="{% static 'wallet_analyzer/js/nft_pagination.js' %}"></script>
 
-{% include "wallet_analyzer/components/check_wallet_connection.html" %}
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="{% static 'wallet_analyzer/js/f5_connection_metamask_check.js' %}"></script>
+
 </body>
 </html>
+                

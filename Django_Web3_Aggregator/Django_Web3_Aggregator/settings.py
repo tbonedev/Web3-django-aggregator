@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+import wallet_analyzer
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -123,7 +125,10 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 # Путь к общей папке для статических файлов (в корне проекта)
-STATICFILES_DIRS = [BASE_DIR / 'Django_Web3_Aggregator' / 'static']
+STATICFILES_DIRS = [
+    BASE_DIR / 'Django_Web3_Aggregator' / 'static',
+    BASE_DIR / 'wallet_analyzer' / 'static',
+]
 
 # Где Django будет собирать все статические файлы при использовании collectstatic
 STATIC_ROOT = BASE_DIR / "staticfiles"
