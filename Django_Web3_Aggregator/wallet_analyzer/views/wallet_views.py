@@ -1,6 +1,5 @@
 from web3 import Web3
 
-
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
@@ -15,6 +14,12 @@ from ..wallet_analysis import WalletNFTs, EVMTools
 from ..wallet_analysis.services import WalletBalance
 
 from ..wallet_analysis.сonfig import eth_connection
+
+from ..cache.wallet_cache import (
+    get_cached_wallet_balance,
+    get_cached_wallet_nfts,
+    invalidate_cache,
+)
 
 
 
@@ -59,14 +64,14 @@ class WalletBalanceView(TemplateView):
         wallet_nfts = WalletNFTs(wallet_address, api_key="e12879e3012940e186ae9277976fe41b")
 
         context['address'] = wallet_address
-        context['balances'] = wallet_balance.get_balances()
+        context['balances'] = get_cached_wallet_balance(wallet_address)
 
         # Отображаем первые 5 NFT для каждой сети
         nfts_by_network = {}
         for network in ["ethereum", "polygon", "avalanche", "base", "zora"]:
             nfts_by_network[network] = wallet_nfts.get_nfts(chain=network, offset=0, limit=5)
 
-        context['nfts_by_network'] = nfts_by_network
+        context['nfts_by_network'] = get_cached_wallet_nfts(wallet_address)
         return context
 
     def handle_ajax_request(self, request):
