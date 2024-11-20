@@ -11,6 +11,8 @@ django = "^5.1.2"
 web3 = "^7.4.0"
 drf-yasg = "^1.21.8"
 django-redis = "^5.4.0"
+pytest = "^8.3.3"
+pytest-django = "^4.9.0"
 
 
 [build-system]
