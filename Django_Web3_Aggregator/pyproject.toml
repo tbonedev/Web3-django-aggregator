@@ -18,3 +18,7 @@ pytest-django = "^4.9.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "Django_Web3_Aggregator.settings"
+
