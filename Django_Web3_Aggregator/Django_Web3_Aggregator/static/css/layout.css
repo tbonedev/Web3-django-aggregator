@@ -1,11 +1,10 @@
-
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
+html, body {
+    height: 100%; /* Разрешить высоту для всей страницы */
+    margin: 0; /* Убираем отступы */
+    overflow-y: auto; /* Гарантируем вертикальную прокрутку */
 }
 
-main {
-    flex: 1;
+main.container {
+    min-height: 100vh; /* Минимальная высота для основной области */
+    padding: 2rem; /* Добавляем отступы */
 }
