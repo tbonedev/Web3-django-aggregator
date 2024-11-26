@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "drf_yasg",
     "wallet_analyzer.apps.WalletAnalyzerConfig",
+    "web2.apps.Web2Config",
 ]
 
 MIDDLEWARE = [
