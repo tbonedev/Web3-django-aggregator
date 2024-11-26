@@ -1,3 +1,4 @@
+from eth_utils.network import networks
 from web3 import Web3
 
 from django.http import JsonResponse, HttpResponseRedirect
@@ -127,31 +128,37 @@ class WalletMoreInfoView(TemplateView):
             return redirect('wallet_analyzer:wallet_connection')
         return super().dispatch(request, *args, **kwargs)
 
-    def get_transaction_count(self, wallet_address):
-        w3 = eth_connection.get_web3_instance()
+    def get_transaction_count(self, wallet_address, connection):
         try:
-            # Преобразуем адрес в формат контрольной суммы
+            w3 = connection.get_web3_instance()
             checksum_address = Web3.to_checksum_address(wallet_address)
 
             # Получаем количество транзакций
-            tx_count = w3.eth.get_transaction_count(checksum_address)
-            return tx_count
+            return w3.eth.get_transaction_count(checksum_address)
         except Exception as e:
-            return f"Ошибка: {str(e)}"
+            # Логируем ошибки и возвращаем 0
+            print(f"Error fetching transactions: {e}")
+            return 0
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         wallet_address = self.request.session.get('wallet_address')
 
-        # Получаем количество транзакций
-        tx_count = self.get_transaction_count(wallet_address)
+        # Получаем все подключения к сетям через EVMTools
+        network_connections = EVMTools.get_network_connections()
+
+        transactions_per_network = {}
+        for network_name, connection in network_connections.items():
+            tx_count = self.get_transaction_count(wallet_address, connection)
+            transactions_per_network[network_name] = tx_count
 
         # Передаем данные в контекст
         context['address'] = wallet_address
-        context['tx_count'] = tx_count
+        context['transactions_per_network'] = transactions_per_network
         context['more_info'] = "Здесь может быть дополнительная информация о кошельке"
 
         return context
+
 
 class NetworkInfoView(TemplateView):
     template_name = "wallet_analyzer/components/network_info.html"
