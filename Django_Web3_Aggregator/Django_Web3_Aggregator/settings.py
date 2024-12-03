@@ -150,3 +150,8 @@ CACHES = {
         'KEY_PREFIX': 'wallet_cache'
     }
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+if DEBUG:
+    EMAIL_HOST = '0.0.0.0'
+    EMAIL_PORT = 1025
